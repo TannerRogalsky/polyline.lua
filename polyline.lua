@@ -159,14 +159,41 @@ local function polyline(join_type, coords, half_width, pixel_size, draw_overdraw
   len_s = renderEdge(anchors, normals, s, len_s, ns, q, r, half_width)
 
   local vertices = {}
-  for i=1,#normals do
-    table.insert(vertices, {
-      anchors[i].x + normals[i].x,
-      anchors[i].y + normals[i].y,
-    })
+  local indices = nil
+  local draw_mode = 'strip'
+  local vertex_count = #normals
+  if join_type == 'none' then
+    vertex_count = vertex_count - 4
+    for i=3,#normals-2 do
+      table.insert(vertices, {
+        anchors[i].x + normals[i].x,
+        anchors[i].y + normals[i].y,
+      })
+    end
+    indices = {}
+    local num_indices = vertex_count / 4
+    for i=0,num_indices-1 do
+      -- First triangle.
+      table.insert(indices, i * 4 + 0 + 1)
+      table.insert(indices, i * 4 + 1 + 1)
+      table.insert(indices, i * 4 + 2 + 1)
+
+      -- Second triangle.
+      table.insert(indices, i * 4 + 1 + 1)
+      table.insert(indices, i * 4 + 2 + 1)
+      table.insert(indices, i * 4 + 3 + 1)
+    end
+    draw_mode = 'triangles'
+  else
+    for i=1,vertex_count do
+      table.insert(vertices, {
+        anchors[i].x + normals[i].x,
+        anchors[i].y + normals[i].y,
+      })
+    end
   end
 
-  return vertices
+  return vertices, indices, draw_mode
 end
 
 return polyline
