@@ -38,8 +38,8 @@ local function renderEdgeNone(anchors, normals, s, len_s, ns, q, r, hw)
 
   table.insert(anchors, Vector(q))
   table.insert(anchors, Vector(q))
-  table.insert(normals, Vector(ns))
   table.insert(normals, Vector(-ns.x, -ns.y))
+  table.insert(normals, Vector(ns))
 
   return len_s
 end
@@ -179,7 +179,7 @@ local function polyline(join_type, coords, half_width, pixel_size, draw_overdraw
       table.insert(indices, i * 4 + 2 + 1)
 
       -- Second triangle.
-      table.insert(indices, i * 4 + 1 + 1)
+      table.insert(indices, i * 4 + 0 + 1)
       table.insert(indices, i * 4 + 2 + 1)
       table.insert(indices, i * 4 + 3 + 1)
     end
