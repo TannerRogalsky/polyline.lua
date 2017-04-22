@@ -32,6 +32,8 @@ This method of getting and drawing a single line is slower than using Love's API
 
 To see these examples live, please run `main.lua` using Love.
 
+![examples](examples.png)
+
 ```lua
 do -- Treat the line as a mask for an image, it's UVs match the bounding box of the texture
   local vertices = polyline('miter', coords, 3, 1/scale, true)
