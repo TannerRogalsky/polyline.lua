@@ -6,6 +6,8 @@ This is an implementation of [Love's](love2d.org) line drawing algorithm in pure
 The API is a single function.
 ```lua
 local vertices, indices, draw_mode = polyline(join_type, coords, half_width, pixel_size, draw_overdraw)
+local mesh = love.graphics.newMesh(vertices, draw_mode)
+mesh:setVertexMap(indices)
 ```
 
 ### Arguments
